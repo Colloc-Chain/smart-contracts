@@ -9,7 +9,7 @@
     "prettier": "prettier --write ./**/*.{sol,js}"
   },
   "dependencies": {
-    "solc": "0.7.0",
+    "solc": "0.6.2",
     "truffle": "^5.1.46"
   },
   "devDependencies": {
