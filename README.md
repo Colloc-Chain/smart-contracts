@@ -4,19 +4,19 @@ This repository is a classic truffle project and contains smart contracts based 
 
 ## TODO:
 
-- [] - Add ERC20/ERC721 (Openzeppelin for example)
-- [] - Extend ERC20
-  - [] - Add functions to mint/burn ERC20 tokens
-  - [] - Allow given address to manipulate balance of another address
-- [] - Extend ERC721
-  - [] - Model leases
-  - [] - Add functions to mint/burn ERC721 tokens
-  - [] - Give right permissions
-  - [] - Connect ERC20 contract
-- [] - Write Unit Tests
-- [] - Update migrations + truffle config to deploy on our own network
-- [] - Update husky
-- [] - Setup CI/CD
+- [ ] - Add ERC20/ERC721 (Openzeppelin for example)
+- [ ] - Extend ERC20
+  - [ ] - Add functions to mint/burn ERC20 tokens
+  - [ ] - Allow given address to manipulate balance of another address
+- [ ] - Extend ERC721
+  - [ ] - Model leases
+  - [ ] - Add functions to mint/burn ERC721 tokens
+  - [ ] - Give right permissions
+  - [ ] - Connect ERC20 contract
+- [ ] - Write Unit Tests
+- [ ] - Update migrations + truffle config to deploy on our own network
+- [ ] - Update husky
+- [ ] - Setup CI/CD
 
 ### Dev Tools
 
