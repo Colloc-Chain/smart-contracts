@@ -1,5 +1,5 @@
-const Leases = artifacts.require('Leases');
+const Landlord = artifacts.require('Landlord');
 
 module.exports = deployer => {
-  deployer.deploy(Leases, 'Leases', 'LSE');
+  deployer.deploy(Landlord, 'Leases', 'LSE');
 };
