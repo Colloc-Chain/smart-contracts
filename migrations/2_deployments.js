@@ -1,5 +1,7 @@
+const CLCToken = artifacts.require('CLCToken');
 const Landlord = artifacts.require('Landlord');
 
-module.exports = deployer => {
-  deployer.deploy(Landlord, 'Leases', 'LSE');
+module.exports = async deployer => {
+  await deployer.deploy(Landlord, 'Leases', 'LSE');
+  await deployer.deploy(CLCToken, 'Colloc', 'CLC');
 };
