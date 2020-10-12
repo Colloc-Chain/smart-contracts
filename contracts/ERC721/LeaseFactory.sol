@@ -41,6 +41,12 @@ contract LeaseFactory is ERC721, Ownable {
         return true;
     }
 
+    function removeLandlord(address account) public onlyOwner returns (bool) {
+        require(isLandlord[account] == true, "LeaseFactory: address not a landlord");
+        isLandlord[account] = false;
+        return true;
+    }
+
     function createLease(
         uint256 price,
         uint256 maxTenants,
