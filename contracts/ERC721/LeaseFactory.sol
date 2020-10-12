@@ -34,7 +34,6 @@ contract LeaseFactory is ERC721, Ownable {
     // prettier-ignore
     // solhint-disable-next-line max-line-length
     function getLeaseById(uint256 tokenId) public view returns (uint256, uint256, address[] memory) {
-        require(tokenId >= 0, "LeaseFactory: token id negative");
         require(tokenId < _tokenIds.current(), "LeaseFactory: token id negative");
         Lease memory lease = leaseById[tokenId];
         return (lease.price, lease.maxTenants, lease.tenants);
@@ -42,6 +41,7 @@ contract LeaseFactory is ERC721, Ownable {
 
     function registerLandlord(address account) public onlyOwner returns (bool) {
         require(isLandlord[account] == false, "LeaseFactory: address already landlord");
+
         isLandlord[account] = true;
 
         emit LandlordRegistered(account);
@@ -51,6 +51,7 @@ contract LeaseFactory is ERC721, Ownable {
 
     function removeLandlord(address account) public onlyOwner returns (bool) {
         require(isLandlord[account] == true, "LeaseFactory: address not a landlord");
+
         isLandlord[account] = false;
 
         emit LandlordRemoved(account);
