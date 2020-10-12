@@ -6,6 +6,11 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract LeaseFactory is ERC721, Ownable {
+    event LandlordRegistered(address indexed landlord);
+    event LandlordRemoved(address indexed landlord);
+    event LeaseCreated(address indexed owner, uint256 tokenId, uint256 price, uint256 maxTenants);
+    event LeaseRemoved(address indexed owner, uint256 tokenId);
+
     using Counters for Counters.Counter;
     Counters.Counter internal _tokenIds;
 
@@ -38,12 +43,18 @@ contract LeaseFactory is ERC721, Ownable {
     function registerLandlord(address account) public onlyOwner returns (bool) {
         require(isLandlord[account] == false, "LeaseFactory: address already landlord");
         isLandlord[account] = true;
+
+        emit LandlordRegistered(account);
+
         return true;
     }
 
     function removeLandlord(address account) public onlyOwner returns (bool) {
         require(isLandlord[account] == true, "LeaseFactory: address not a landlord");
         isLandlord[account] = false;
+
+        emit LandlordRemoved(account);
+
         return true;
     }
 
@@ -66,16 +77,21 @@ contract LeaseFactory is ERC721, Ownable {
         _safeMint(_msgSender(), tokenId);
         _setTokenURI(tokenId, tokenURI);
 
+        emit LeaseCreated(_msgSender(), tokenId, price, maxTenants);
+
         return tokenId;
     }
 
-    function deleteLease(uint256 tokenId) public returns (uint256) {
+    function removeLease(uint256 tokenId) public returns (uint256) {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
             "LeaseFactory: caller is not owner nor approved"
         );
 
         _burn(tokenId);
+
+        emit LeaseRemoved(_msgSender(), tokenId);
+
         return tokenId;
     }
 }

@@ -4,6 +4,9 @@ pragma solidity ^0.6.2;
 import "./LeaseFactory.sol";
 
 contract Landlord is LeaseFactory {
+    event TenantRegistered(uint256 tokenId, address indexed tenant);
+    event TenantRemoved(uint256 tokenId, address indexed tenant);
+
     // solhint-disable-next-line no-empty-blocks
     constructor(string memory name, string memory symbol) public LeaseFactory(name, symbol) {}
 
@@ -27,6 +30,8 @@ contract Landlord is LeaseFactory {
         require(tenants.length < maxTenants, "Landlord: max tenants already reached");
 
         lease.tenants.push(account);
+
+        emit TenantRegistered(tokenId, account);
 
         return true;
     }
@@ -54,6 +59,8 @@ contract Landlord is LeaseFactory {
                 break;
             }
         }
+
+        emit TenantRemoved(tokenId, account);
 
         return true;
     }
