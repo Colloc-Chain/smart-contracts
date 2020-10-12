@@ -90,6 +90,7 @@ contract LeaseFactory is ERC721, Ownable {
         );
 
         _burn(tokenId);
+        delete leaseById[tokenId];
 
         emit LeaseRemoved(_msgSender(), tokenId);
 
