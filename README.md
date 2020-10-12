@@ -4,17 +4,17 @@ This repository is a classic truffle project and contains smart contracts based 
 
 ## TODO:
 
-- [ ] - Add ERC20/ERC721 (Openzeppelin for example)
+- [✔] - Add ERC20/ERC721 (Openzeppelin for example)
 - [ ] - Extend ERC20
-  - [ ] - Add functions to mint/burn ERC20 tokens
+  - [✔] - Add functions to mint/burn ERC20 tokens
   - [ ] - Allow given address to manipulate balance of another address
 - [ ] - Extend ERC721
-  - [ ] - Model leases
-  - [ ] - Add functions to mint/burn ERC721 tokens
+  - [✔] - Model leases
+  - [✔] - Add functions to mint/burn ERC721 tokens
   - [ ] - Give right permissions
   - [ ] - Connect ERC20 contract
 - [ ] - Write Unit Tests
-- [ ] - Update migrations + truffle config to deploy on our own network
+- [✔] - Update migrations + truffle config to deploy on our own network
 - [ ] - Update husky
 - [ ] - Setup CI/CD
 
@@ -23,6 +23,32 @@ This repository is a classic truffle project and contains smart contracts based 
 - [Prettier](https://prettier.io/): Prettify code
 - [Solhint](https://protofire.github.io/solhint/): Check smart contract issues
 - [Husky](https://github.com/typicode/husky): Trigger Git Hooks
+
+### Usage
+
+Compile contracts
+
+```bash
+$ yarn compile
+```
+
+Test with truffle
+
+```bash
+$ yarn console
+```
+
+To check errors
+
+```bash
+$ yarn lint
+```
+
+To format solidity and javascript files
+
+```bash
+$ yarn prettier
+```
 
 ## Contribute
 
@@ -42,4 +68,6 @@ Write **Unit Tests** and if necessary, update config files.
 
 Once you think your feature is done, make a pull request to the `dev branch`.
 
-Please **do not** push directly on Master and Dev.
+Also, if you are working on an issue you can reference them like #issue_id
+
+⚠ Please **do not** push directly on Master and Dev ⚠
