@@ -5,12 +5,14 @@
   "scripts": {
     "compile": "truffle compile",
     "console": "truffle develop",
+    "deploy:besu": "truffle migrate --network besu --reset",
     "lint": "solhint -f table contracts/**/*.sol",
     "prettier": "prettier --write ./**/*.{sol,js}"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^3.2.0",
     "@truffle/hdwallet-provider": "^1.1.0",
+    "node-fetch": "^2.6.1",
     "solc": "0.6.2",
     "truffle": "^5.1.46"
   },
@@ -20,5 +22,10 @@
     "prettier-plugin-solidity": "^1.0.0-alpha.58",
     "solhint": "^3.2.1",
     "solhint-plugin-prettier": "^0.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn prettier"
+    }
   }
 }
