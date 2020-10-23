@@ -5,6 +5,7 @@
   "scripts": {
     "compile": "truffle compile",
     "console": "truffle develop",
+    "deploy:besu": "truffle migrate --network besu --reset",
     "lint": "solhint -f table contracts/**/*.sol",
     "prettier": "prettier --write ./**/*.{sol,js}"
   },
