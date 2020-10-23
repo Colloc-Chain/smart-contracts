@@ -22,5 +22,10 @@
     "prettier-plugin-solidity": "^1.0.0-alpha.58",
     "solhint": "^3.2.1",
     "solhint-plugin-prettier": "^0.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn prettier"
+    }
   }
 }
