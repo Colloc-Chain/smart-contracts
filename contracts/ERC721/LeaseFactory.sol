@@ -31,6 +31,10 @@ contract LeaseFactory is ERC721, Ownable {
         _;
     }
 
+    function getTotalTokensCreated() public view returns (uint256) {
+        return _tokenIds.current();
+    }
+
     // prettier-ignore
     // solhint-disable-next-line max-line-length
     function getLeaseById(uint256 tokenId) public view returns (uint256, uint256, address[] memory) {
