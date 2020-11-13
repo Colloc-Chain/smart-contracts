@@ -15,7 +15,7 @@ This repository is a classic truffle project and contains smart contracts based 
   - [ ] - Connect ERC20 contract
 - [ ] - Write Unit Tests
 - [✔] - Update migrations + truffle config to deploy on our own network
-- [ ] - Update husky
+- [✔] - Update lint-staged + husky
 - [ ] - Setup CI/CD
 
 ### Dev Tools
@@ -23,8 +23,25 @@ This repository is a classic truffle project and contains smart contracts based 
 - [Prettier](https://prettier.io/): Prettify code
 - [Solhint](https://protofire.github.io/solhint/): Check smart contract issues
 - [Husky](https://github.com/typicode/husky): Trigger Git Hooks
+- [Lint-staged](https://github.com/okonet/lint-staged): Execute actions to staged files
+
+### Configuration
+
+Create a `.env` file and set the RPC_URI environment variable
 
 ### Usage
+
+Deploy to besu - Make sure to have the server running
+
+```bash
+$ yarn deploy:besu
+```
+
+Unit Tests
+
+```bash
+$ yarn test
+```
 
 Compile contracts
 
@@ -32,19 +49,19 @@ Compile contracts
 $ yarn compile
 ```
 
-Test with truffle
+Debug
 
 ```bash
 $ yarn console
 ```
 
-To check errors
+Check errors
 
 ```bash
 $ yarn lint
 ```
 
-To format solidity and javascript files
+Format solidity and javascript files
 
 ```bash
 $ yarn prettier
