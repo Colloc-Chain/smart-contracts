@@ -7,9 +7,10 @@ contract CLCToken is ERC20 {
     // solhint-disable-next-line no-empty-blocks
     constructor(string memory name, string memory symbol) public ERC20(name, symbol) {}
 
-    function deposit(address account, uint256 amount) public returns (bool) {
+    function deposit(address account,address spender, uint256 amount) public returns (bool) {
         require(_msgSender() == account, "ERC20: deposit to someone else address");
         _mint(account, amount);
+        //approve(account, amount);
         return true;
     }
 

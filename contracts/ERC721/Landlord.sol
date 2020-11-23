@@ -85,12 +85,17 @@ contract Landlord is LeaseFactory {
         require(account != address(0), "Landlord: address is address(0)");
         require(tokenId < _tokenIds.current(), "Landlord: tokenId too large");
     }
-    function PayRent(address account_from, address account_to, uint256 amount) public 
+        
+    function PayRent(address account_from, address account_to) public  returns (bool) 
     {
-        require(isTenant[account_from],"Landlord: sending address is not tenant");
-        require(isLandlord[_msgSender()],"Landlord : receiving address is not landlord");
+        require(isTenant[_msgSender()],"Landlord: sending address is not tenant");
+        require(isLandlord[account_to],"Landlord : receiving address is not landlord");
         uint256 rent= leaseById[tenantToTokenId[account_from]].price / leaseById[tenantToTokenId[account_from]].maxTenants;
+
+        _erc20.approve(account_to,rent);
         _erc20.transferFrom(account_from,account_to,rent);
+        //emit chi 9alloua
+        return true;
         
     }
 }

@@ -3,10 +3,10 @@ const Landlord = artifacts.require('Landlord');
 
 module.exports = async function(deployer,network,accounts)  {
   await deployer.deploy(CLCToken, 'Colloc', 'CLC');
-  const clcToken = await CLCToken.deployer();
+  const clcToken = await CLCToken.deployed();
 
   await deployer.deploy(Landlord,clcToken.address, 'Leases', 'LSE');
-  const landlord = await Landlord.deployer();
+  const landlord = await Landlord.deployed();
   
 };
 /*const CLCToken = artifacts.require('CLCToken');
