@@ -1,7 +1,7 @@
 const CLCToken = artifacts.require('CLCToken');
 const Landlord = artifacts.require('Landlord');
 
-const { updateSmartContractRecords } = require('../scripts/post_deploy');
+const { updateSmartContractRecords, addOwner } = require('../scripts/post_deploy');
 
 module.exports = async (deployer, network) => {
   if (network === 'besu') {
@@ -12,6 +12,9 @@ module.exports = async (deployer, network) => {
         return { erc20, erc721 };
       })
       .then(({ erc20, erc721 }) => {
+        // ugly but need to make things work quickly
+        const ownerPrivateKey = 'c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3';
+        addOwner(ownerPrivateKey);
         updateSmartContractRecords(erc20, erc721);
       });
   }
