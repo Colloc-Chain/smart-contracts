@@ -7,6 +7,7 @@ import "../ERC20/CLCToken.sol";
 contract Landlord is LeaseFactory {
     event TenantRegistered(uint256 tokenId, address indexed tenant);
     event TenantRemoved(uint256 tokenId, address indexed tenant);
+    event RentPaid(address indexed tenant, uint256 rent);
 
     mapping(address => bool) public isTenant;
     mapping(address => uint256) public tenantToTokenId;
@@ -15,6 +16,10 @@ contract Landlord is LeaseFactory {
     // solhint-disable-next-line no-empty-blocks
     constructor(CLCToken erc20, string memory name, string memory symbol) public LeaseFactory(name, symbol) {
         _erc20 = erc20;
+    }
+    modifier OnlyTenant() {
+        require(isTenant[_msgSender()] == true, "Landlord: caller is not tenant");
+        _;
     }
     modifier onlyLandlordOf(uint256 tokenId) {
         address owner = ownerOf(tokenId);
@@ -94,7 +99,7 @@ contract Landlord is LeaseFactory {
 
         _erc20.approve(account_to,rent);
         _erc20.transferFrom(account_from,account_to,rent);
-        //emit chi 9alloua
+        emit RentPaid(account_from, rent);
         return true;
         
     }

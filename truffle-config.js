@@ -8,14 +8,16 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-
-/*const HDWalletProvider = require('@truffle/hdwallet-provider');
+require('dotenv').config();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 const privateKey = 'c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3';
-*/
+const rpc_uri = process.env.RPC_URI;
+
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -34,10 +36,10 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    /*besu: {
+    besu: {
       provider: () => new HDWalletProvider(privateKey, 'http://127.0.0.1:8545'),
       network_id: '*',
-    },*/
+    },
     development: {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 7545,            // Standard Ethereum port (default: none)
