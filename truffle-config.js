@@ -37,7 +37,7 @@ module.exports = {
     // options below to some value.
     //
     besu: {
-      provider: () => new HDWalletProvider(privateKey, 'http://127.0.0.1:8545'),
+      provider: () => new HDWalletProvider(privateKey, rpc_uri),
       network_id: '*',
     },
     development: {
