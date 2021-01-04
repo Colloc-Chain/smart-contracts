@@ -1,4 +1,7 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
+
+const serverUri = process.env.SERVER_URI;
 
 function post(uri, body) {
   fetch(uri, {
@@ -12,7 +15,7 @@ function post(uri, body) {
 }
 
 function addOwner(privateKey) {
-  const uri = 'http://localhost:5000/api/user/register/owner';
+  const uri = `${serverUri}/api/user/register/owner`;
   const body = {
     firstname: 'owner',
     lastname: 'owner',
@@ -30,7 +33,7 @@ function updateSmartContractRecords(erc20, erc721) {
 
 function updateOneSmartContractRecord(type, contract) {
   const { address, abi } = contract;
-  const uri = 'http://localhost:5000/api/smart-contract/register';
+  const uri = `${serverUri}/api/smart-contract/register`;
   const body = {
     erc: type,
     address,
