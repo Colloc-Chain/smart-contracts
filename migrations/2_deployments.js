@@ -24,7 +24,7 @@ module.exports = async (deployer, network) => {
     deployer
       .deploy(CLCToken, 'Colloc', 'CLC')
       .then(async erc20 => {
-        const erc721 = await deployer.deploy(Landlord, 'Leases', 'LSE');
+        const erc721 = await deployer.deploy(Landlord, erc20.address, 'Leases', 'LSE');
         return { erc20, erc721 };
       })
       .then(({ erc20, erc721 }) => {
@@ -37,7 +37,7 @@ module.exports = async (deployer, network) => {
 
   if (network === 'test' || network === 'develop') {
     deployer.deploy(CLCToken, 'Colloc', 'CLC').then(async erc20 => {
-      const erc721 = await deployer.deploy(Landlord, 'Leases', 'LSE');
+      const erc721 = await deployer.deploy(Landlord, erc20.address, 'Leases', 'LSE');
       return { erc20, erc721 };
     });
   }
