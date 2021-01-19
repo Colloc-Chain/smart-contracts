@@ -219,7 +219,7 @@ contract('Landlord', accounts => {
       });
       describe('Pay Rent', () => {
         it(`should transfer ${rent} tokens`, async () => {
-          await truffleAssert.passes(erc20.deposit(tenant, landlord, 400, { from: tenant }));
+          await truffleAssert.passes(erc20.deposit(450, { from: tenant }));
           await erc20.approve(erc721.address, rent, { from: tenant });
           await truffleAssert.passes(erc721.PayRent(tenant, landlord, { from: tenant }));
           const balance = await erc20.balanceOf(landlord);
