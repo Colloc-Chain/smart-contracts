@@ -27,7 +27,7 @@ This repository is a classic truffle project and contains smart contracts based 
 
 ### Configuration
 
-Create a `.env` file and set the RPC_URI environment variable
+Create a `.env` file and set the RPC_URI and SERVER_URI environment variables
 
 ### Usage
 

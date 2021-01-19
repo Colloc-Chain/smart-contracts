@@ -1,7 +1,7 @@
 const truffleAssert = require('truffle-assertions');
 const Landlord = artifacts.require('Landlord');
 //const LeaseFactory = artifacts.require('LeaseFactory')
-const CLCToken = artifacts.require('CLCToken')
+const CLCToken = artifacts.require('CLCToken');
 
 const name = 'Leases';
 const symbol = 'LSE';
@@ -17,14 +17,14 @@ function formatRawLease(rawLease) {
 }
 
 contract('Landlord', accounts => {
-  let erc721,erc721_2,erc20;
+  let erc721, erc721_2, erc20;
   const owner = accounts[0];
   const landlord = accounts[1];
   const tenant = accounts[2];
 
   beforeEach(async () => {
     erc20 = await CLCToken.new(name2, symbol2, { from: owner });
-    erc721 = await Landlord.new(erc20.address,name, symbol, { from: owner });
+    erc721 = await Landlord.new(erc20.address, name, symbol, { from: owner });
     //erc721_2 = await LeaseFactory.new()
     await truffleAssert.passes(erc721.registerLandlord(landlord, { from: owner }));
 
@@ -109,7 +109,7 @@ contract('Landlord', accounts => {
   describe('Leases', () => {
     const price = 1200;
     const maxTenants = 3;
-    const rent = price/maxTenants;
+    const rent = price / maxTenants;
     const tenants = [];
     const tokenURI = 'tokenURI';
     let tokenId;
@@ -123,7 +123,6 @@ contract('Landlord', accounts => {
       const totalTokensCreated = await erc721.getTotalTokensCreated();
       tokenId = totalTokensCreated - 1;
     });
-    
 
     describe('Create Lease', () => {
       it('should create lease', async () => {
@@ -220,11 +219,11 @@ contract('Landlord', accounts => {
       });
       describe('Pay Rent', () => {
         it(`should transfer ${rent} tokens`, async () => {
-          await truffleAssert.passes(erc20.deposit(tenant,landlord, 400, { from: tenant }));
-          await erc20.approve(erc721.address,rent,{from : tenant});
-          await truffleAssert.passes(erc721.PayRent(tenant, landlord,{ from: tenant }));
+          await truffleAssert.passes(erc20.deposit(tenant, landlord, 400, { from: tenant }));
+          await erc20.approve(erc721.address, rent, { from: tenant });
+          await truffleAssert.passes(erc721.PayRent(tenant, landlord, { from: tenant }));
           const balance = await erc20.balanceOf(landlord);
-      
+
           assert.equal(rent, balance, 'ERC721: transfering wrong amount');
         });
       });
@@ -271,7 +270,6 @@ contract('Landlord', accounts => {
 
         await truffleAssert.reverts(erc721.removeTenant(tokenId, tenant, { from: otherLandlord }));
       });
-      
     });
   });
 });

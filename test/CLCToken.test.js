@@ -15,12 +15,10 @@ contract('CLCToken', accounts => {
     assert.ok(amount > 0, 'amount is zero or negative');
   });
 
-
   describe('Deposit', () => {
     it(`should deposit ${amount} tokens to own account`, async () => {
       await truffleAssert.passes(erc20.deposit(amount, { from: account }));
       const balance = await erc20.balanceOf(account);
-
 
       assert.equal(balance, amount, 'ERC20: deposit wrong amount');
     });
@@ -40,12 +38,10 @@ contract('CLCToken', accounts => {
     });
   });
 
-
   describe('Withdraw', () => {
     it(`should withdraw ${amount} tokens`, async () => {
       await truffleAssert.passes(erc20.deposit(amount, { from: account }));
       const balanceAfterDeposit = await erc20.balanceOf(account);
-
 
       await truffleAssert.passes(erc20.withdraw(amount, { from: account }));
       const balanceAfterWithdraw = await erc20.balanceOf(account);

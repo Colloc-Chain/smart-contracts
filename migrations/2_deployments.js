@@ -1,5 +1,3 @@
-
-
 /*module.exports = async function(deployer,network,accounts)  {
   await deployer.deploy(CLCToken, 'Colloc', 'CLC');
   const clcToken = await CLCToken.deployed();
@@ -14,14 +12,12 @@ const Landlord = artifacts.require('Landlord');
 
 const { updateSmartContractRecords, addOwner } = require('../scripts/post_deploy');
 
-
 module.exports = async (deployer, network) => {
-  if (network === 'development')
-  {
+  if (network === 'development') {
     await deployer.deploy(CLCToken, 'Colloc', 'CLC');
     const clcToken = await CLCToken.deployed();
 
-    await deployer.deploy(Landlord,clcToken.address, 'Leases', 'LSE');
+    await deployer.deploy(Landlord, clcToken.address, 'Leases', 'LSE');
     const landlord = await Landlord.deployed();
   }
   if (network === 'besu') {
@@ -46,4 +42,3 @@ module.exports = async (deployer, network) => {
     });
   }
 };
-

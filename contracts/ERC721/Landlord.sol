@@ -11,12 +11,16 @@ contract Landlord is LeaseFactory {
 
     mapping(address => bool) public isTenant;
     mapping(address => uint256) public tenantToTokenId;
-    CLCToken public _erc20 ;
+    CLCToken public _erc20;
 
-    // solhint-disable-next-line no-empty-blocks
-    constructor(CLCToken erc20, string memory name, string memory symbol) public LeaseFactory(name, symbol) {
+    constructor(
+        CLCToken erc20,
+        string memory name,
+        string memory symbol
+    ) public LeaseFactory(name, symbol) {
         _erc20 = erc20;
     }
+
     modifier OnlyTenant() {
         require(isTenant[_msgSender()] == true, "Landlord: caller is not tenant");
         _;
@@ -90,17 +94,16 @@ contract Landlord is LeaseFactory {
         require(account != address(0), "Landlord: address is address(0)");
         require(tokenId < _tokenIds.current(), "Landlord: tokenId too large");
     }
-        
-    function PayRent(address account_from, address account_to) public  returns (bool) 
-    {
-        require(isTenant[_msgSender()],"Landlord: sending address is not tenant");
-        require(isLandlord[account_to],"Landlord : receiving address is not landlord");
-        uint256 rent= leaseById[tenantToTokenId[account_from]].price / leaseById[tenantToTokenId[account_from]].maxTenants;
 
-        _erc20.approve(account_to,rent);
-        _erc20.transferFrom(account_from,account_to,rent);
+    function PayRent(address account_from, address account_to) public returns (bool) {
+        require(isTenant[_msgSender()], "Landlord: sending address is not tenant");
+        require(isLandlord[account_to], "Landlord : receiving address is not landlord");
+        uint256 rent = leaseById[tenantToTokenId[account_from]].price /
+            leaseById[tenantToTokenId[account_from]].maxTenants;
+
+        _erc20.approve(account_to, rent);
+        _erc20.transferFrom(account_from, account_to, rent);
         emit RentPaid(account_from, rent);
         return true;
-        
     }
 }
