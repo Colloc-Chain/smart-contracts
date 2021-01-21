@@ -32,12 +32,12 @@ This repository is a classic truffle project and contains smart contracts based 
 NODE_TLS_REJECT_UNAUTHORIZED=0
 
 # PROD
-RPC_URI_PROD=<vm_ip_address>:<port>
-SERVER_URI_PROD=<vm_ip_address>:<port>
+RPC_URI_PROD=https://<vm_ip_address>:<port>
+SERVER_URI_PROD=https://<vm_ip_address>:<port>
 
 # DEV
-RPC_URI_DEV=<vm_ip_address>:port
-SERVER_URI_DEV=https://localhost:5000
+RPC_URI_DEV=https://<vm_ip_address>:port
+SERVER_URI_DEV=http://localhost:5000
 ```
 
 ### Usage
