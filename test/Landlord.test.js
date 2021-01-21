@@ -1,8 +1,12 @@
 const truffleAssert = require('truffle-assertions');
 const Landlord = artifacts.require('Landlord');
+//const LeaseFactory = artifacts.require('LeaseFactory')
+const CLCToken = artifacts.require('CLCToken');
 
 const name = 'Leases';
 const symbol = 'LSE';
+const name2 = 'CLCToken';
+const symbol2 = 'CLC';
 
 function formatRawLease(rawLease) {
   return {
@@ -13,13 +17,15 @@ function formatRawLease(rawLease) {
 }
 
 contract('Landlord', accounts => {
-  let erc721;
+  let erc721, erc721_2, erc20;
   const owner = accounts[0];
   const landlord = accounts[1];
   const tenant = accounts[2];
 
   beforeEach(async () => {
-    erc721 = await Landlord.new(name, symbol, { from: owner });
+    erc20 = await CLCToken.new(name2, symbol2, { from: owner });
+    erc721 = await Landlord.new(erc20.address, name, symbol, { from: owner });
+    //erc721_2 = await LeaseFactory.new()
     await truffleAssert.passes(erc721.registerLandlord(landlord, { from: owner }));
 
     const isLandlord = await erc721.isLandlord(landlord);
@@ -101,8 +107,9 @@ contract('Landlord', accounts => {
   });
 
   describe('Leases', () => {
-    const price = 1000;
+    const price = 1200;
     const maxTenants = 3;
+    const rent = price / maxTenants;
     const tenants = [];
     const tokenURI = 'tokenURI';
     let tokenId;
@@ -209,6 +216,16 @@ contract('Landlord', accounts => {
           JSON.stringify([tenant]),
           'tenant address not added to lease tenants array'
         );
+      });
+      describe('Pay Rent', () => {
+        it(`should transfer ${rent} tokens`, async () => {
+          await truffleAssert.passes(erc20.deposit(450, { from: tenant }));
+          await erc20.approve(erc721.address, rent, { from: tenant });
+          await truffleAssert.passes(erc721.PayRent(tenant, landlord, { from: tenant }));
+          const balance = await erc20.balanceOf(landlord);
+
+          assert.equal(rent, balance, 'ERC721: transfering wrong amount');
+        });
       });
 
       it("should not add tenant to someone else's lease", async () => {

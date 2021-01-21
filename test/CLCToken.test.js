@@ -8,6 +8,7 @@ contract('CLCToken', accounts => {
   let erc20;
   const amount = 100;
   const account = accounts[0];
+  const spender = accounts[1];
 
   beforeEach(async () => {
     erc20 = await CLCToken.new(name, symbol, { from: account });
