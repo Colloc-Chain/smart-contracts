@@ -221,7 +221,7 @@ contract('Landlord', accounts => {
         it(`should transfer ${rent} tokens`, async () => {
           await truffleAssert.passes(erc20.deposit(450, { from: tenant }));
           await erc20.approve(erc721.address, rent, { from: tenant });
-          await truffleAssert.passes(erc721.PayRent(tenant, landlord, { from: tenant }));
+          await truffleAssert.passes(erc721.PayRent2({ from: tenant }));
           const balance = await erc20.balanceOf(landlord);
 
           assert.equal(rent, balance, 'ERC721: transfering wrong amount');

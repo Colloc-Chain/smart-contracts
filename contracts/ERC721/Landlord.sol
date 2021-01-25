@@ -106,4 +106,15 @@ contract Landlord is LeaseFactory {
         emit RentPaid(account_from, rent);
         return true;
     }
+    function PayRent2() public returns (bool) {
+        require(isTenant[_msgSender()], "Landlord: sending address is not tenant");
+        require(isLandlord[ownerOf(tenantToTokenId[_msgSender()])], "Landlord : receiving address is not landlord");
+        uint256 rent = leaseById[tenantToTokenId[_msgSender()]].price /
+            leaseById[tenantToTokenId[_msgSender()]].maxTenants;
+
+        _erc20.approve(ownerOf(tenantToTokenId[_msgSender()]), rent);
+        _erc20.transferFrom(_msgSender(), ownerOf(tenantToTokenId[_msgSender()]), rent);
+        emit RentPaid(_msgSender(), rent);
+        return true;
+    }
 }
