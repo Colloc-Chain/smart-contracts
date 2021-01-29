@@ -7,10 +7,18 @@ contract CLCToken is ERC20 {
     event CreateERC20(address indexed contractAddress, string name, string symbol);
 
     // solhint-disable-next-line no-empty-blocks
+    
     constructor(string memory name, string memory symbol) public ERC20(name, symbol) {
         emit CreateERC20(address(this), name, symbol);
     }
-
+    /**
+     * 
+     * Requirements:
+     *
+     * -the amount deposited needs to be positive.
+     * 
+     * returns a boolean
+     */
     function deposit(int256 amount) public returns (bool) {
         require(amount > 0, "ERC20: deposit zero or negative amount");
 
@@ -18,7 +26,14 @@ contract CLCToken is ERC20 {
 
         return true;
     }
-
+    /**
+     * 
+     * Requirements:
+     *
+     * -the amount withdrawn needs to be positive.
+     * 
+     * returns a boolean
+     */
     function withdraw(int256 amount) public returns (bool) {
         require(amount > 0, "ERC20: withdraw zero or negative amount");
 

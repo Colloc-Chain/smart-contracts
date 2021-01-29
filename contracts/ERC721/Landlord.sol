@@ -10,9 +10,11 @@ contract Landlord is LeaseFactory {
     event RentPaid(address indexed tenant, uint256 rent);
 
     mapping(address => bool) public isTenant;
+    // Mapping from address a boolean. True if the address is a tenant and false if not a Tenant.
     mapping(address => uint256) public tenantToTokenId;
+    // Mapping from address to the token id
     CLCToken public _erc20;
-
+    
     constructor(
         CLCToken erc20,
         string memory name,
@@ -20,17 +22,20 @@ contract Landlord is LeaseFactory {
     ) public LeaseFactory(name, symbol) {
         _erc20 = erc20;
     }
-
+    /**
+     *  Initializes the contract by setting a `name` and a `symbol` to the token collection.
+     */
     modifier OnlyTenant() {
         require(isTenant[_msgSender()] == true, "Landlord: caller is not tenant");
         _;
     }
+    // Modifier requiring the msgSender to be a tenant 
     modifier onlyLandlordOf(uint256 tokenId) {
         address owner = ownerOf(tokenId);
         require(_msgSender() == owner, "Landlord: caller is not owner of tokenId");
         _;
     }
-
+    // Modifier requiring the msgSender to be the landlord and thus owner of the tokenID 
     function registerTenant(uint256 tokenId, address account)
         public
         onlyLandlordOf(tokenId)
@@ -55,7 +60,16 @@ contract Landlord is LeaseFactory {
 
         return true;
     }
-
+    /**
+     * Adds a tenant to the lease and updates the mappings
+     *
+     * Requirements:
+     *
+     * - Only the landlord can use this function.
+     * - The tenant added cannot already be a tenant
+     * Emits a TenantRegistered event.
+     * Returns a boolean.
+     */
     function removeTenant(uint256 tokenId, address account)
         public
         onlyLandlordOf(tokenId)
@@ -89,12 +103,29 @@ contract Landlord is LeaseFactory {
 
         return true;
     }
-
+    /**
+     * Removes a tenant from the lease and updates the mappings 
+     *
+     * Requirements:
+     *
+     * - Only the landlord can use this function.
+     * - The tenant added needs to  be a tenant
+     * Emits a TenantRemoved event.
+     * Returns a boolean.
+     */
     function _checkAddressAndTokenId(address account, uint256 tokenId) private view {
         require(account != address(0), "Landlord: address is address(0)");
         require(tokenId < _tokenIds.current(), "Landlord: tokenId too large");
     }
-
+    /**
+     * Checks if the address and tokenID are valid 
+     *
+     * Requirements:
+     *
+     * - Address needs to not be address(0)
+     * - Tokenid needs to be valid
+     *
+     */
     function PayRent(address account_from, address account_to) public returns (bool) {
         require(isTenant[_msgSender()], "Landlord: sending address is not tenant");
         require(isLandlord[account_to], "Landlord : receiving address is not landlord");
@@ -106,4 +137,15 @@ contract Landlord is LeaseFactory {
         emit RentPaid(account_from, rent);
         return true;
     }
+    /**
+     * Allows the tenant to pay the rent 
+     *
+     * Requirements:
+     *
+     * - Only a tenant can use this function.
+     * - Rent can only be sent to the landlord
+     * 
+     * Emits a RentPaid event.
+     * Returns a boolean.
+     */
 }
